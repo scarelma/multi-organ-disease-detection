@@ -20,6 +20,25 @@ model = tf.keras.models.load_model('model.h5')
 IMG_SIZE = (224, 224)
 
 
+LUNG_SERVER_URL = os.getenv("LUNG_SERVER_URL")
+if LUNG_SERVER_URL is None:
+    # raise Exception("LUNG_SERVER_URL is not defined")
+    LUNG_SERVER_URL = "http://localhost:5002"
+else :
+    LUNG_SERVER_URL = "http://" +  LUNG_SERVER_URL + ":5002"
+BRAIN_SERVER_URL = os.getenv("BRAIN_SERVER_URL")
+if BRAIN_SERVER_URL is None:
+    # raise Exception("LUNG_SERVER_URL is not defined")
+    BRAIN_SERVER_URL = "http://localhost:5001"
+else :
+    BRAIN_SERVER_URL = "http://" + BRAIN_SERVER_URL + ":5001"
+
+
+# Logging env variables for debugging
+print("LUNG_SERVER_URL: ", LUNG_SERVER_URL)
+print("BRAIN_SERVER_URL: ", BRAIN_SERVER_URL)
+
+
 def preprocess(img):
     # img = cv2.imread(str(img))
     img = cv2.resize(img, (224, 224))
@@ -105,17 +124,14 @@ def home():
             try:
                 if organ == 'brain':
                     with open(image_path, 'rb') as f:
-                        resp = httpx.post('http://localhost:5002/',
+                        resp = httpx.post(BRAIN_SERVER_URL,
                                         files={'fileUpload': f})
                     os.remove(image_path)
-                    # return str(resp)
                     return render_template("main.html", title="Home", content=f"Organ {organ} detected with {resp.json()}")
                 else:
                     with open(image_path, 'rb') as f:
-                        resp = httpx.post('http://localhost:5002/',
+                        resp = httpx.post(LUNG_SERVER_URL,
                                         files={'fileUpload': f})
-                    # resp = httpx.post('http://localhost:5002/',
-                        # files={'fileUpload': })
                     os.remove(image_path)
 
                     return render_template("main.html", title="Home", content=f"Organ {organ} detected with {resp.json()}")
@@ -134,4 +150,4 @@ def info():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

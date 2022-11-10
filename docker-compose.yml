@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  lung_server:
+    image: ls:0.1
+    container_name: lung_server
+  brain_server:
+    image: bs:0.1
+    container_name: brain_server
+  main_server:
+    image: oms:1
+    depends_on:
+      - lung_server
+      - brain_server
+    environment:
+      - LUNG_SERVER_URL=lung_server
+      - BRAIN_SERVER_URL=brain_server
+    ports:
+      - "5000:5000"
