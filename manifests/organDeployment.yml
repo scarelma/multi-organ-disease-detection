@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organ-deployment
+  labels:
+    app: organ
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organ
+  template:
+    metadata:
+      labels:
+        app: organ
+    spec:
+      containers:
+      - name: organ
+        image: oms:1
+        env:
+        - name: BRAIN_SERVER_URL
+          value: "brain-service"
+        - name: LUNG_SERVER_URL
+          value: "lung-service"
+        ports:
+        - containerPort: 5000
+
+---
+
+# nodeport service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: organ-service
+spec:
+  type: NodePort
+  selector:
+    app: organ
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+    nodePort: 30000

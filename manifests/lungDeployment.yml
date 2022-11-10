@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lung-deployment
+  labels:
+    app: lung
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lung
+  template:
+    metadata:
+      labels:
+        app: lung
+    spec:
+      containers:
+      - name: lung
+        image: ls:0.1
+        ports:
+        - containerPort: 5002
+
+---
+
+# clusterip service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lung-service
+spec:
+  selector:
+    app: lung
+  ports:
+  - protocol: TCP
+    port: 5002
+    targetPort: 5002
