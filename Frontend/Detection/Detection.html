@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Detector</title>
+    <link rel="stylesheet" href="Detection.css">
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/271aabb734.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar" id="Detection">
+        
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+            <!-- <img src="./img/menu_bar.png" alt="" class="menu-btn" height="50px" width="40px"> -->
+        </label>
+        
+        <ul>
+            <li><a class="nav-sec" href="../index.html">Home</a></li>
+            <li><a class="nav-sec" href="#Detection" >Detection</a></li>
+            <li><a class="nav-sec" href="../Result/Result.html" >Result</a></li>
+            <li><a class="nav-sec" href="../About/About.html" >About Us</a></li>
+            
+        </ul>
+      </nav>
+    
+      <div class="outer">
+        <h1 >Upload file to <br>detect disease</h1>
+    <div class="wrapper">
+    <header>Upload File</header>
+    <form action="#">
+        <input type="file" class="file-input" name="file" accept=".jpg, .png, .pdf" hidden>
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Browse File to Upload</p>
+    </form>
+    <section class="progress-area"></section>
+    <section class="uploaded-area"></section>
+</div>
+</div>
+
+<script src="./Detection.js"></script>
+</body>
+</html>
