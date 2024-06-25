@@ -7,3 +7,4 @@ imutils==0.5.4
 
 httpx==0.23.0
 numpy
+anyio>=4.4.0 # not directly required, pinned by Snyk to avoid a vulnerability
